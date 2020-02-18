@@ -17,3 +17,4 @@ Created on Thu Feb 13 15:54:51 2020
 import tensorflow as tf
 import numpy as np
 print(tf.__version__)
+

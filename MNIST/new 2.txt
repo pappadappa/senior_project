@@ -1,0 +1,12 @@
+import cv2
+import matplotlib.pyplot as plt
+from keras.models import load_model
+
+model = load_model(r'my_model_mnist.h5')
+img = cv2.imread(r'E:\University\4. year 4\BME444 Artificial Neural Systems\MNIST\number.jpg',0);
+img2 = cv2.resize(img,(28,28))
+img = img2.reshape(1,1,28,28);
+img = img.astype('float32');
+img = 1.0 - img/255.0
+out = model.predict(img3)
+print(out)
