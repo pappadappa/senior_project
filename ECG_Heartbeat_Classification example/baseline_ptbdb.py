@@ -23,25 +23,35 @@ X_test = np.array(df_test[list(range(187))].values)[..., np.newaxis]
 
 
 def get_model():
+    
     nclass = 1
     inp = Input(shape=(187, 1))
+    
+    #convolution1
     img_1 = Convolution1D(16, kernel_size=5, activation=activations.relu, padding="valid")(inp)
     img_1 = Convolution1D(16, kernel_size=5, activation=activations.relu, padding="valid")(img_1)
     img_1 = MaxPool1D(pool_size=2)(img_1)
     img_1 = Dropout(rate=0.1)(img_1)
+    
+    #convolution2
     img_1 = Convolution1D(32, kernel_size=3, activation=activations.relu, padding="valid")(img_1)
     img_1 = Convolution1D(32, kernel_size=3, activation=activations.relu, padding="valid")(img_1)
     img_1 = MaxPool1D(pool_size=2)(img_1)
     img_1 = Dropout(rate=0.1)(img_1)
+    
+    #convolution3
     img_1 = Convolution1D(32, kernel_size=3, activation=activations.relu, padding="valid")(img_1)
     img_1 = Convolution1D(32, kernel_size=3, activation=activations.relu, padding="valid")(img_1)
     img_1 = MaxPool1D(pool_size=2)(img_1)
     img_1 = Dropout(rate=0.1)(img_1)
+    
+    #convolution4
     img_1 = Convolution1D(256, kernel_size=3, activation=activations.relu, padding="valid")(img_1)
     img_1 = Convolution1D(256, kernel_size=3, activation=activations.relu, padding="valid")(img_1)
     img_1 = GlobalMaxPool1D()(img_1)
     img_1 = Dropout(rate=0.2)(img_1)
-
+    
+    #fully connected
     dense_1 = Dense(64, activation=activations.relu, name="dense_1")(img_1)
     dense_1 = Dense(64, activation=activations.relu, name="dense_2")(dense_1)
     dense_1 = Dense(nclass, activation=activations.sigmoid, name="dense_3_ptbdb")(dense_1)
