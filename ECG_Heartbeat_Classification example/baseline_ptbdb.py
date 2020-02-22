@@ -64,10 +64,16 @@ def get_model():
     return model
 
 model = get_model()
+
+
 file_path = "baseline_cnn_ptbdb.h5"
+
 checkpoint = ModelCheckpoint(file_path, monitor='val_acc', verbose=1, save_best_only=True, mode='max')
+
 early = EarlyStopping(monitor="val_acc", mode="max", patience=5, verbose=1)
+
 redonplat = ReduceLROnPlateau(monitor="val_acc", mode="max", patience=3, verbose=2)
+
 callbacks_list = [checkpoint, early, redonplat]  # early
 
 model.fit(X, Y, epochs=1000, verbose=2, callbacks=callbacks_list, validation_split=0.1)
