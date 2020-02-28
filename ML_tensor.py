@@ -9,11 +9,10 @@ Created on Thu Feb 13 15:54:51 2020
 
 import pandas as pd
 import numpy as np
-from scipy.io import loadmat
-import tables
-
 import tensorflow as tf
+import os 
 
+from scipy.io import loadmat
 from keras import optimizers, losses, activations, models
 from keras.callbacks import ModelCheckpoint, EarlyStopping, LearningRateScheduler, ReduceLROnPlateau
 from keras.layers import Dense, Input, Dropout, Convolution1D, MaxPool1D, GlobalMaxPool1D, GlobalAveragePooling1D, \
@@ -22,13 +21,53 @@ from sklearn.metrics import accuracy_score, f1_score
 from sklearn.model_selection import train_test_split
 
 #---------------------------------------
-#input data form fourier transform
+#change path to crackle
 
-X_train =
-Y_train =
+os.chdir(r"E:\University\Senior Project\code_github\Senior_project\database form matlab\FFT_Nor_Crackle") 
+print("Directory changed") 
+print("\n") 
 
-X_test =
-Y_test = 
+#---------------------------------------
+#create Dataframe of crackle
+
+entries = os.listdir(r"E:\University\Senior Project\code_github\Senior_project\database form matlab\FFT_Nor_Crackle")
+# print(entries)
+for i in entries:
+    data1 = loadmat(i)
+    data_raw = data1['f']
+    pdata = pd.DataFrame(data_raw)
+    df_1 = pdata.append(pdata)
+    
+#---------------------------------------
+#change path to wheeze
+    
+os.chdir(r"E:\University\Senior Project\code_github\Senior_project\database form matlab\FFT_Nor_Wheeze") 
+print("Directory changed") 
+print("\n") 
+
+#---------------------------------------
+#create Dataframe of wheeze
+
+entries = os.listdir(r"E:\University\Senior Project\code_github\Senior_project\database form matlab\FFT_Nor_Wheeze")
+# print(entries)
+for i in entries:
+    data1 = loadmat(i)
+    data_raw = data1['f']
+    pdata = pd.DataFrame(data_raw)
+    df_2 = pdata.append(pdata)
+
+df = pd.concat([df_1, df_2])
+
+#---------------------------------------
+#separate file train and test
+
+df_train, df_test = train_test_split(df, test_size=0.2, random_state=1337, stratify=df[187])
+
+Y = np.array(df_train[187].values).astype(np.int8)
+X = np.array(df_train[list(range(187))].values)[..., np.newaxis]
+
+Y_test = np.array(df_test[187].values).astype(np.int8)
+X_test = np.array(df_test[list(range(187))].values)[..., np.newaxis]
 
 
 #---------------------------------------
