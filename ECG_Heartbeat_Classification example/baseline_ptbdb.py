@@ -1,6 +1,7 @@
 import pandas as pd
 import numpy as np
 
+
 from keras import optimizers, losses, activations, models
 from keras.callbacks import ModelCheckpoint, EarlyStopping, LearningRateScheduler, ReduceLROnPlateau
 from keras.layers import Dense, Input, Dropout, Convolution1D, MaxPool1D, GlobalMaxPool1D, GlobalAveragePooling1D, \
@@ -15,8 +16,8 @@ df = pd.concat([df_1, df_2])
 df_train, df_test = train_test_split(df, test_size=0.2, random_state=1337, stratify=df[187])
 
 
-Y = np.array(df_train[187].values).astype(np.int8)
-X = np.array(df_train[list(range(187))].values)[..., np.newaxis]
+Y_train = np.array(df_train[187].values).astype(np.int8)
+X_train = np.array(df_train[list(range(187))].values)[..., np.newaxis]
 
 Y_test = np.array(df_test[187].values).astype(np.int8)
 X_test = np.array(df_test[list(range(187))].values)[..., np.newaxis]
@@ -76,7 +77,7 @@ redonplat = ReduceLROnPlateau(monitor="val_acc", mode="max", patience=3, verbose
 
 callbacks_list = [checkpoint, early, redonplat]  # early
 
-model.fit(X, Y, epochs=1000, verbose=2, callbacks=callbacks_list, validation_split=0.1)
+model.fit(X_train, Y_train, epochs=1000, verbose=2, callbacks=callbacks_list, validation_split=0.1)
 model.load_weights(file_path)
 
 pred_test = model.predict(X_test)

@@ -13,62 +13,102 @@ import tensorflow as tf
 import os 
 
 from scipy.io import loadmat
+
+
+from scipy.io import loadmat
 from keras import optimizers, losses, activations, models
 from keras.callbacks import ModelCheckpoint, EarlyStopping, LearningRateScheduler, ReduceLROnPlateau
 from keras.layers import Dense, Input, Dropout, Convolution1D, MaxPool1D, GlobalMaxPool1D, GlobalAveragePooling1D, \
     concatenate
 from sklearn.metrics import accuracy_score, f1_score
 from sklearn.model_selection import train_test_split
+from sklearn.model_selection import KFold
 
 #---------------------------------------
 #change path to crackle
 
-os.chdir(r"E:\University\Senior Project\code_github\Senior_project\database form matlab\FFT_Nor_Crackle") 
-print("Directory changed") 
+os.chdir(r"E:\University\Senior Project\code_github\Senior_project\database form matlab\FFT_Nor_Crackle\power") 
+print("Directory changed (Crackle)") 
 print("\n") 
 
 #---------------------------------------
 #create Dataframe of crackle
 
-entries = os.listdir(r"E:\University\Senior Project\code_github\Senior_project\database form matlab\FFT_Nor_Crackle")
+entries = os.listdir(r"E:\University\Senior Project\code_github\Senior_project\database form matlab\FFT_Nor_Crackle\power")
 # print(entries)
-for i in entries:
-    data1 = loadmat(i)
-    data_raw = data1['f']
-    pdata = pd.DataFrame(data_raw)
-    df_1 = pdata.append(pdata)
+
+df_p1 = pd.DataFrame()
+
+for i in range(0, len(entries), 1):
+    data1 = loadmat(entries[i])
+    data_raw1 = data1['P']
+    # print(data_raw)
+    dataT1 = data_raw1.T
+    print(i)
+    pdata1 = pd.DataFrame(dataT1)
+    df_p1 = pd.concat([df_p1,pdata1], ignore_index=True) 
+
+df_t1 = pd.DataFrame(np.zeros(len(df_p1)))
     
 #---------------------------------------
 #change path to wheeze
     
-os.chdir(r"E:\University\Senior Project\code_github\Senior_project\database form matlab\FFT_Nor_Wheeze") 
-print("Directory changed") 
+os.chdir(r"E:\University\Senior Project\code_github\Senior_project\database form matlab\FFT_Nor_Wheeze\power") 
+print("Directory changed (Wheeze)") 
 print("\n") 
 
 #---------------------------------------
 #create Dataframe of wheeze
 
-entries = os.listdir(r"E:\University\Senior Project\code_github\Senior_project\database form matlab\FFT_Nor_Wheeze")
+entries = os.listdir(r"E:\University\Senior Project\code_github\Senior_project\database form matlab\FFT_Nor_Wheeze\power")
 # print(entries)
-for i in entries:
-    data1 = loadmat(i)
-    data_raw = data1['f']
-    pdata = pd.DataFrame(data_raw)
-    df_2 = pdata.append(pdata)
 
-df = pd.concat([df_1, df_2])
+df_p2 = pd.DataFrame()
+
+for i in range(0,  len(entries), 1):
+    data2 = loadmat(entries[i])
+    data_raw2 = data2['P']
+    # print(data_raw)
+    dataT2 = data_raw2.T
+    print(i)
+    pdata2 = pd.DataFrame(dataT2)
+    df_p2 = pd.concat([df_p2,pdata2], ignore_index=True) 
+    
+df_t2 = pd.DataFrame(np.ones(len(df_p2)))
+
+df_p = pd.concat([df_p1, df_p2])
+df_t = pd.concat([df_t1, df_t2])
+
 
 #---------------------------------------
 #separate file train and test
 
-df_train, df_test = train_test_split(df, test_size=0.2, random_state=1337, stratify=df[187])
+dfp_train, dfp_test, dft_train, dft_test = train_test_split(df_p, df_t, test_size=0.1, random_state=None)
 
-Y = np.array(df_train[187].values).astype(np.int8)
-X = np.array(df_train[list(range(187))].values)[..., np.newaxis]
+Y = np.array(dft_train.values)
+X = np.array(dfp_train.values)
 
-Y_test = np.array(df_test[187].values).astype(np.int8)
-X_test = np.array(df_test[list(range(187))].values)[..., np.newaxis]
+Y_test = np.array(dft_test.values)
+X_test = np.array(dfp_test.values)
 
+# p = df_p.values.tolist()
+# t = df_t.values.tolist()
+
+# kf = KFold(n_splits=5, shuffle=True)
+# kf.get_n_splits(df_p)
+
+# print(kf)
+
+# X = []
+# Y = []
+# X_test = []
+# Y_test = []
+
+# for train_index, test_index in kf.split(X):
+#     print("TRAIN:", train_index, "TEST:", test_index)
+#     print("\n")
+#     X, X_test = X[train_index], X[test_index]
+#     Y, Y_test = y[train_index], y[test_index]
 
 #---------------------------------------
 #function create deep learning model 
@@ -76,7 +116,7 @@ X_test = np.array(df_test[list(range(187))].values)[..., np.newaxis]
 def get_model():
     
     nclass = 1
-    inp = Input(shape=(187, 1))
+    inp = Input(shape=(1,524288))
     
     #---------------------------------------
     #convolution part
@@ -133,6 +173,8 @@ model = get_model()
 #---------------------------------------
 #save model
 
+os.chdir(r"E:\University\Senior Project\code_github\Senior_project") 
+print("Directory changed (save model)") 
 file_path = "classify_lungsound.h5"
 model.save(file_path)
 
