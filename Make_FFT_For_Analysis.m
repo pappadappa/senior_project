@@ -25,6 +25,6 @@ for k=1:length(audio_files)
     ylabel('|P(f)|')
     
     
-    save(['E:\University\Senior Project\code_github\Senior_project\database form matlab\FFT_Nor_Wheeze\P_FFT_' , fileNames_Save, '.mat'],'P')
-    save(['E:\University\Senior Project\code_github\Senior_project\database form matlab\FFT_Nor_Wheeze\f_FFT_' , fileNames_Save, '.mat'],'f')
+    save(['E:\University\Senior Project\code_github\Senior_project\database form matlab\FFT_Nor_Wheeze\power\P_FFT_' , fileNames_Save, '.mat'],'P')
+    save(['E:\University\Senior Project\code_github\Senior_project\database form matlab\FFT_Nor_Wheeze\frequency\f_FFT_' , fileNames_Save, '.mat'],'f')
 end    

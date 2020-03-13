@@ -91,6 +91,6 @@ X_test = np.array(dfp_test.values).astype('float32')
 #---------------------------------------
 
 # model = Sequential()
-# model.add(Conv1D(1024, 4, 
+# model.add(Conv1D(51200, 64, 
 #           activation='relu', 
-#           input_shape=(1,524288)))
+#           input_shape=(1,1048576)))
