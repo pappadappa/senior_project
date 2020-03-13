@@ -13,16 +13,15 @@ import tensorflow as tf
 import os 
 
 from scipy.io import loadmat
+from sklearn.model_selection import train_test_split
 
+from keras.models import Sequential
+from keras.layers import Conv1D
 
-from scipy.io import loadmat
 from keras import optimizers, losses, activations, models
 from keras.callbacks import ModelCheckpoint, EarlyStopping, LearningRateScheduler, ReduceLROnPlateau
-from keras.layers import Dense, Input, Dropout, Convolution1D, MaxPool1D, GlobalMaxPool1D, GlobalAveragePooling1D, \
-    concatenate
+
 from sklearn.metrics import accuracy_score, f1_score
-from sklearn.model_selection import train_test_split
-from sklearn.model_selection import KFold
 
 #---------------------------------------
 #change path to crackle
@@ -86,10 +85,10 @@ df_t = pd.concat([df_t1, df_t2])
 dfp_train, dfp_test, dft_train, dft_test = train_test_split(df_p, df_t, test_size=0.1, random_state=None)
 
 Y = np.array(dft_train.values)
-X = np.array(dfp_train.values)
+X = np.array(dfp_train.values).astype('float32')
 
 Y_test = np.array(dft_test.values)
-X_test = np.array(dfp_test.values)
+X_test = np.array(dfp_test.values).astype('float32')
 
 # p = df_p.values.tolist()
 # t = df_t.values.tolist()

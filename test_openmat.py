@@ -92,27 +92,3 @@ for i in range(0, len(entries), 1):
     
 #--------------------------------------
 
-# X = np.array([[1, 2], [3, 4], [1, 2], [3, 4], [1, 2], [3, 4], [1, 2], [3, 4], [1, 2], [3, 4]])
-# y = np.array([1, 2, 3, 4, 1, 2, 3, 4, 1, 2])
-kf = KFold(n_splits=5)
-kf.get_n_splits(X)
-
-print(kf)
-
-for train_index, test_index in kf.split(X):
-    print("TRAIN:", train_index, "TEST:", test_index)
-    print("\n")
-    X_train, X_test = X[train_index], X[test_index]
-    y_train, y_test = y[train_index], y[test_index]
-    
-# print(X_train)
-# print("\n")
-# print(X_test)
-# print("\n")
-# print(y_train)
-# print("\n")
-# print(y_test)
-
-
-d = pd.DataFrame(np.zeros(len(all_pdata)))
-    
