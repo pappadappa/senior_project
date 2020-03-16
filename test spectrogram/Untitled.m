@@ -1,15 +1,10 @@
-clear all
-close all
-clc
+result = [];
 
-folder = 'E:\University\Senior Project\code_github\Senior_project\database form matlab\Save_S_output_Wheeze';
-audio_files = dir(fullfile(folder,'*.mat'));
-
-for k=1:1
-    fileNames = load(audio_files(k).name); 
-    fileNames_Save = strrep(audio_files(k).name,'.mat','');
+for i = 1:256
+    if f1(i) == f2(i)
+        result[i] = 1;
+    else
+        result[i] = 0;
+    end
     
-    s = spectrogram(fileNames.s1_output);
-    spectrogram(fileNames.s1_output, 'yaxis');
-    saveas(gcf,'filename.png');
 end

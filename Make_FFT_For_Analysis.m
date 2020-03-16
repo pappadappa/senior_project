@@ -14,6 +14,7 @@ for k=1:length(audio_files)
     disp(length(fileNames.s1_output));
     n = 2^nextpow2(length(fileNames.s1_output));
     f = Fs*(0:(n/2))/n;
+    disp(leng
     Y = fft(fileNames.s1_output,n); 
     P = abs(Y/n);
     

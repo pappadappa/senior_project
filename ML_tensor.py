@@ -26,14 +26,14 @@ from sklearn.metrics import accuracy_score, f1_score
 #---------------------------------------
 #change path to crackle
 
-os.chdir(r"E:\University\Senior Project\code_github\Senior_project\database form matlab\FFT_Nor_Crackle\power") 
+os.chdir(r"E:\University\Senior Project\code_github\Senior_project\database form matlab\Save_S_output_Crackle\power") 
 print("Directory changed (Crackle)") 
 print("\n") 
 
 #---------------------------------------
 #create Dataframe of crackle
 
-entries = os.listdir(r"E:\University\Senior Project\code_github\Senior_project\database form matlab\FFT_Nor_Crackle\power")
+entries = os.listdir(r"E:\University\Senior Project\code_github\Senior_project\database form matlab\Save_S_output_Crackle\power")
 # print(entries)
 
 df_p1 = pd.DataFrame()
@@ -48,18 +48,25 @@ for i in range(0, len(entries), 1):
     df_p1 = pd.concat([df_p1,pdata1], ignore_index=True) 
 
 df_t1 = pd.DataFrame(np.zeros(len(df_p1)))
+
+del entries
+del data1
+del data_raw1
+del dataT1
+del pdata1
+del i
     
 #---------------------------------------
 #change path to wheeze
     
-os.chdir(r"E:\University\Senior Project\code_github\Senior_project\database form matlab\FFT_Nor_Wheeze\power") 
+os.chdir(r"E:\University\Senior Project\code_github\Senior_project\database form matlab\Save_S_output_Wheeze\power") 
 print("Directory changed (Wheeze)") 
 print("\n") 
 
 #---------------------------------------
 #create Dataframe of wheeze
 
-entries = os.listdir(r"E:\University\Senior Project\code_github\Senior_project\database form matlab\FFT_Nor_Wheeze\power")
+entries = os.listdir(r"E:\University\Senior Project\code_github\Senior_project\database form matlab\Save_S_output_Wheeze\power")
 # print(entries)
 
 df_p2 = pd.DataFrame()
@@ -75,20 +82,41 @@ for i in range(0,  len(entries), 1):
     
 df_t2 = pd.DataFrame(np.ones(len(df_p2)))
 
+del entries
+del data2
+del data_raw2
+del dataT2
+del pdata2
+del i
+
 df_p = pd.concat([df_p1, df_p2])
 df_t = pd.concat([df_t1, df_t2])
 
+del df_p1
+del df_p2
+del df_t1
+del df_t2
 
 #---------------------------------------
 #separate file train and test
 
 dfp_train, dfp_test, dft_train, dft_test = train_test_split(df_p, df_t, test_size=0.1, random_state=None)
 
+del df_p
+del df_t
+
 Y = np.array(dft_train.values)
 X = np.array(dfp_train.values).astype('float32')
+X = np.reshape(X, (X.shape[0], 1, 262144))
 
 Y_test = np.array(dft_test.values)
 X_test = np.array(dfp_test.values).astype('float32')
+X_test = np.reshape(X_test, (X_test.shape[0], 1, 262144))
+
+del dfp_train
+del dfp_test
+del dft_train
+del dft_test
 
 # p = df_p.values.tolist()
 # t = df_t.values.tolist()

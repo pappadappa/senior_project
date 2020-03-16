@@ -52,7 +52,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.model_selection import KFold
   
 # change the current directory 
-os.chdir(r"E:\University\Senior Project\code_github\Senior_project\database form matlab\FFT_Nor_Crackle\power") 
+os.chdir(r"E:\University\Senior Project\code_github\Senior_project\database form matlab\Save_S_output_Crackle\power") 
 print("Directory changed") 
 print("\n") 
 
@@ -76,7 +76,7 @@ print("\n")
 
 #--------------------------------------
 
-entries = os.listdir(r"E:\University\Senior Project\code_github\Senior_project\database form matlab\FFT_Nor_Crackle\power")
+entries = os.listdir(r"E:\University\Senior Project\code_github\Senior_project\database form matlab\Save_S_output_Crackle\power")
 # print(entries)
 all_pdata = pd.DataFrame()
 
@@ -86,9 +86,66 @@ for i in range(0, len(entries), 1):
     # print(data_raw)
     dataT1 = data_raw.T
     print(i)
-    pdata = pd.DataFrame(dataT1)
-    all_pdata = pd.concat([all_pdata,pdata], ignore_index=True) 
-    
-    
+    pdata = pd.DataFrame(pd.DataFrame(dataT1))
+    all_pdata = pd.concat([all_pdata,pdata], ignore_index=True)   
+
+all_ndata = all_pdata.to_numpy()
+all_ndata = np.reshape(all_ndata, (80, 1, 262144))
+
 #--------------------------------------
+
+# os.chdir(r"E:\University\Senior Project\code_github\Senior_project\database form matlab\Save_S_output_Crackle\power") 
+# print("Directory changed (Crackle)") 
+# print("\n") 
+
+# #---------------------------------------
+# #create Dataframe of crackle
+
+# entries = os.listdir(r"E:\University\Senior Project\code_github\Senior_project\database form matlab\Save_S_output_Crackle\power")
+# # print(entries)
+
+# df_p1 = pd.DataFrame()
+
+# for i in range(0, len(entries), 1):
+#     data1 = loadmat(entries[i])
+#     data_raw1 = data1['P']
+#     # print(data_raw)
+#     dataT1 = data_raw1.T
+#     print(i)
+#     pdata1 = pd.DataFrame(dataT1)
+#     df_p1 = pd.concat([df_p1,pdata1], ignore_index=True) 
+
+# df_t1 = pd.DataFrame(np.zeros(len(df_p1)))
+    
+# #---------------------------------------
+# #change path to wheeze
+    
+# os.chdir(r"E:\University\Senior Project\code_github\Senior_project\database form matlab\Save_S_output_Wheeze\power") 
+# print("Directory changed (Wheeze)") 
+# print("\n") 
+
+# #---------------------------------------
+# #create Dataframe of wheeze
+
+# entries = os.listdir(r"E:\University\Senior Project\code_github\Senior_project\database form matlab\Save_S_output_Wheeze\power")
+# # print(entries)
+
+# df_p2 = pd.DataFrame()
+
+# for i in range(0,  len(entries), 1):
+#     data2 = loadmat(entries[i])
+#     data_raw2 = data2['P']
+#     # print(data_raw)
+#     dataT2 = data_raw2.T
+#     print(i)
+#     pdata2 = pd.DataFrame(dataT2)
+#     df_p2 = pd.concat([df_p2,pdata2], ignore_index=True) 
+    
+# df_t2 = pd.DataFrame(np.ones(len(df_p2)))
+
+# df_p = pd.concat([df_p1, df_p2])
+# df_t = pd.concat([df_t1, df_t2])
+
+# arr_p = df_p.to_numpy()
+# arr_t = df_t.to_numpy()
 
