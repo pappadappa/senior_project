@@ -124,7 +124,7 @@ model.save(file_path)
 
 os.chdir(r"E:\University\Senior Project\code_github\Senior_project\complete code") 
 print("\n") 
-print("Directory changed (save result)") 
+print("Directory changed (save result train)") 
 print("\n") 
 
 #---------------------------------------

@@ -65,12 +65,20 @@ def Find_Optimal_Cutoff(target, predicted):
 threshold_se = Find_Optimal_Cutoff(Y_test, pred_test)
 print(threshold_se)
 
-pred_testre = (pred_test>threshold).astype(np.int8)
+pred_testre = (pred_test>threshold_se).astype(np.int8)
 
 acc = accuracy_score(Y_test, pred_testre)
 print(acc)
 con = confusion_matrix(Y_test, pred_testre, normalize=None)
 print(con)
+
+#---------------------------------------
+#set path save result test
+
+os.chdir(r"E:\University\Senior Project\code_github\Senior_project\complete code") 
+print("\n") 
+print("Directory changed (save result test)") 
+print("\n") 
 
 #---------------------------------------
 #save file train and test
