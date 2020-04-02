@@ -21,7 +21,7 @@ import pickle
 #---------------------------------------
 #change path to crackle
 
-os.chdir(r"E:\University\Senior Project\code_github\Senior_project\database form matlab\Save_S_output_Crackle\power") 
+os.chdir(r"E:\University\Senior Project\code_github\Senior_project\database form matlab\Without Zero\FFT_Crackle\power") 
 print("\n")
 print("Directory changed (Crackle)") 
 print("\n") 
@@ -29,7 +29,7 @@ print("\n")
 #---------------------------------------
 #create Dataframe of crackle
 
-entries = os.listdir(r"E:\University\Senior Project\code_github\Senior_project\database form matlab\Save_S_output_Crackle\power")
+entries = os.listdir(r"E:\University\Senior Project\code_github\Senior_project\database form matlab\Without Zero\FFT_Crackle\power")
 # print(entries)
 
 df_p1 = pd.DataFrame()
@@ -54,7 +54,7 @@ del i
 #---------------------------------------
 #change path to wheeze
     
-os.chdir(r"E:\University\Senior Project\code_github\Senior_project\database form matlab\Save_S_output_Wheeze\power") 
+os.chdir(r"E:\University\Senior Project\code_github\Senior_project\database form matlab\Without Zero\FFT_Wheeze\power") 
 print("\n") 
 print("Directory changed (Wheeze)") 
 print("\n") 
@@ -62,7 +62,7 @@ print("\n")
 #---------------------------------------
 #create Dataframe of wheeze
 
-entries = os.listdir(r"E:\University\Senior Project\code_github\Senior_project\database form matlab\Save_S_output_Wheeze\power")
+entries = os.listdir(r"E:\University\Senior Project\code_github\Senior_project\database form matlab\Without Zero\FFT_Wheeze\power")
 # print(entries)
 
 df_p2 = pd.DataFrame()
@@ -119,18 +119,32 @@ del dft_train
 del dfp_test
 del dft_test
 
-df_train = df_train.sample(frac=5, replace=True, random_state=1)
-df_test = df_test.sample(frac=5, replace=True, random_state=1)
+# df_train = df_train.sample(frac=5, replace=True, random_state=1)
+# df_test = df_test.sample(frac=5, replace=True, random_state=1)
 
+#---------------------------------------
+#tranforms file with zero
+# Y = np.array(df_train['result'].values)
+# Y = np.reshape(Y, (Y.shape[0],))
+# X = np.array(df_train[list(range(262144))].values).astype('float32')
+# X = np.reshape(X, (X.shape[0], 262144, 1))
+
+# Y_test = np.array(df_test['result'].values)
+# Y_test = np.reshape(Y_test, (Y_test.shape[0],))
+# X_test = np.array(df_test[list(range(262144))].values).astype('float32')
+# X_test = np.reshape(X_test, (X_test.shape[0], 262144, 1))
+
+#---------------------------------------
+#tranforms file without zero
 Y = np.array(df_train['result'].values)
 Y = np.reshape(Y, (Y.shape[0],))
-X = np.array(df_train[list(range(262144))].values).astype('float32')
-# X = np.reshape(X, (X.shape[0], 1, 262144))
+X = np.array(df_train[list(range(16384))].values).astype('float32')
+X = np.reshape(X, (X.shape[0], 16384, 1))
 
 Y_test = np.array(df_test['result'].values)
 Y_test = np.reshape(Y_test, (Y_test.shape[0],))
-X_test = np.array(df_test[list(range(262144))].values).astype('float32')
-# X_test = np.reshape(X_test, (X_test.shape[0], 1, 262144))
+X_test = np.array(df_test[list(range(16384))].values).astype('float32')
+X_test = np.reshape(X_test, (X_test.shape[0], 16384, 1))
 
 del df_train
 del df_test
@@ -146,7 +160,7 @@ print("\n")
 #---------------------------------------
 #save file train and test
 
-f = open('data_lungsound.pckl', 'wb')
+f = open('data_lungsound_nozero.pckl', 'wb')
 pickle.dump([Y, X, Y_test, X_test], f)
 f.close()
 
