@@ -1,9 +1,7 @@
 # -*- coding: utf-8 -*-
 """
 Created on Mon Mar 16 17:12:34 2020
-
 test code beautiful
-
 @author: Admin
 """
 #---------------------------------------
@@ -163,7 +161,3 @@ print("\n")
 f = open('data_lungsound_nozero.pckl', 'wb')
 pickle.dump([Y, X, Y_test, X_test], f)
 f.close()
-
-
-
-

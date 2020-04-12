@@ -100,9 +100,9 @@ def get_model(layer, active_1, active_2, active_3, Dropout_1, Dropout_2):
 af_1 = {0: 'relu', 1: 'softmax'}
 af_2 = {0: 'relu', 1: 'sigmoid'}
 
-for num_ac1 in range(0, 2, 1):
-    for num_ac2 in range(0, 2, 1):
-        for num_ac3 in range(0, 2, 1):
+for num_ac1 in range(1, 2, 1):
+    for num_ac2 in range(0, 1, 1):
+        for num_ac3 in range(1, 2, 1):
             
             print(af_1[num_ac1])
             print(af_1[num_ac2])

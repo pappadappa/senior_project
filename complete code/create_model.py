@@ -12,7 +12,7 @@ import numpy
 
 import pickle
 
-import pandas as pd
+ import pandas as pd
 import tensorflow as tf 
 
 from scipy.io import loadmat
@@ -98,63 +98,53 @@ def get_model(layer, active_1, active_2, active_3, Dropout_1, Dropout_2):
 #---------------------------------------
 #run function create deep learning model 
 af_1 = {0: 'relu', 1: 'softmax'}
-af_2 = {0: 'relu', 1: 'softmax'}
+af_2 = {0: 'relu', 1: 'sigmoid'}
 
-for num_ac1 in range(0, 1, 1):
+for num_ac1 in range(1, 2, 1):
     for num_ac2 in range(0, 1, 1):
-        for num_ac3 in range(1, 2, 1):
-            
-            print(af_1[num_ac1])
-            print(af_1[num_ac2])
-            print(af_2[num_ac3])
-            
-            for DO_1 in range(3, 4, 1):
-                for DO_2 in range(0, 4, 1):
-                    
-                    Dropout_1 = float(format((2*DO_1+1)*0.1, '.1f'))
-                    Dropout_2 = float(format((2*DO_2+1)*0.1, '.1f'))
-                    layer = 3
-                    active_1 = af_1[num_ac1]
-                    active_2 = af_1[num_ac2]
-                    active_3 = af_2[num_ac3]
-                    
-                    print(Dropout_1)
-                    print(Dropout_2)
-                    
-                    #---------------------------------------
-                    #test model in example code
-                    model = get_model(layer, active_1, active_2, active_3, Dropout_1, Dropout_2)
-                    history = model.fit(X, Y, epochs=500, verbose=1)
-                    
-                    #---------------------------------------
-                    #create folder
-                    new_path = r"E:/University/Senior Project/code_github/Senior_project/complete code/"+ "_" +str(layer)+ "_" +active_1+ "_" +active_2+ "_" +active_3+ "_" +str(Dropout_1)+ "_" +str(Dropout_2)
-                    os.mkdir(new_path)
-                    
-                    #---------------------------------------
-                    #save model
-                    
-                    os.chdir(new_path) 
-                    print("Directory changed (save model)") 
-                    name_model = "classify_lungsound"+ "_" +str(layer)+ "_" +active_1+ "_" +active_2+ "_" +active_3+ "_" +str(Dropout_1)+ "_" +str(Dropout_2)
-                    file_path = name_model+ ".h5"
-                    model.save(file_path)
-                    
-                    #---------------------------------------
-                    #set path save file data for train and test
-                    
-                    os.chdir(new_path) 
-                    print("\n") 
-                    print("Directory changed (save result train)") 
-                    print("\n") 
-                    
-                    #---------------------------------------
-                    #save file train and test
-                    
-                    name_result = 'result_train_lungsound'+ "_" +str(layer)+ "_" +active_1+ "_" +active_2+ "_" +active_3+ "_" +str(Dropout_1)+ "_" +str(Dropout_2)
-                    f = open(name_result +'.pckl', 'wb')
-                    pickle.dump(history.history, f)
-                    f.close()
-                    
-                    del model
+        for num_ac3 in range(0, 2, 1):
+                for DO_1 in range(0, 4, 1):
+                    for DO_2 in range(0, 4, 1):
+                        Dropout_1 = float(format((2*DO_1+1)*0.1, '.1f'))
+                        Dropout_2 = float(format((2*DO_2+1)*0.1, '.1f'))
+                        layer = 3
+                        active_1 = af_1[num_ac1]
+                        active_2 = af_1[num_ac2]
+                        active_3 = af_2[num_ac3]
+                        #---------------------------------------
+                        #test model in example code
+                        model = get_model(layer, active_1, active_2, active_3, Dropout_1, Dropout_2)
+                        history = model.fit(X, Y, epochs=500, verbose=1, validation_data=(X_val, Y_val))
+                        
+                        #---------------------------------------
+                        #create folder
+                        new_path = r"E:/University/Senior Project/code_github/Senior_project/complete code/"+ "_" +str(layer)+ "_" +active_1+ "_" +active_2+ "_" +active_3+ "_" +str(Dropout_1)+ "_" +str(Dropout_2)
+                        os.mkdir(new_path)
+                        
+                        #---------------------------------------
+                        #save model
+                        
+                        os.chdir(new_path) 
+                        print("Directory changed (save model)") 
+                        name_model = "classify_lungsound"+ "_" +str(layer)+ "_" +active_1+ "_" +active_2+ "_" +active_3+ "_" +str(Dropout_1)+ "_" +str(Dropout_2)
+                        file_path = name_model+ ".h5"
+                        model.save(file_path)
+                        
+                        #---------------------------------------
+                        #set path save file data for train and test
+                        
+                        os.chdir(new_path) 
+                        print("\n") 
+                        print("Directory changed (save result train)") 
+                        print("\n") 
+                        
+                        #---------------------------------------
+                        #save file train and test
+                        
+                        name_result = 'result_train_lungsound'+ "_" +str(layer)+ "_" +active_1+ "_" +active_2+ "_" +active_3+ "_" +str(Dropout_1)+ "_" +str(Dropout_2)
+                        f = open(name_result +'.pckl', 'wb')
+                        pickle.dump(history.history, f)
+                        f.close()
+                        
+                        del model
 

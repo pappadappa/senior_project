@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 """
 Created on Tue Mar 17 16:11:33 2020
-
 @author: Admin
 """
 #---------------------------------------
@@ -32,7 +31,8 @@ acc_all = pd.DataFrame()
 con_all = pd.DataFrame()
     
     
-for num in range(111, len(floderlist), 1):
+for num in range(60, len(floderlist), 1):
+# for num in range(0, 60, 1):
 
     path =  r"E:\University\Senior Project\code_github\Senior_project\complete code"
 
@@ -109,20 +109,6 @@ for num in range(111, len(floderlist), 1):
     print(acc)
     con = confusion_matrix(Y_test, pred_testre, normalize=None)
     print(con)
-    
-    acc = [acc]
-    p_acc = pd.DataFrame(acc)
-    acc_all = pd.concat([acc_all, p_acc], ignore_index=True) 
-    
-    p_con1 = pd.DataFrame(con[0])
-    p_con2 = pd.DataFrame(con[1])
-    p_con = pd.concat([p_con1, p_con2], ignore_index=True)
-    p_con = p_con.T
-    con_all = pd.concat([con_all, p_con], ignore_index=True)   
-    
-    del p_con1
-    del p_con2
-    del p_con
     
     #---------------------------------------
     #save file train and test

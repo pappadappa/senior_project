@@ -133,8 +133,9 @@ del dft_val
 del dfp_test
 del dft_test
 
-# df_train = df_train.sample(frac=5, replace=True, random_state=1)
-# df_test = df_test.sample(frac=5, replace=True, random_state=1)
+df_train = df_train.sample(frac=1, replace=False, random_state=1)
+df_val = df_val.sample(frac=1, replace=False, random_state=1)
+df_test = df_test.sample(frac=1, replace=False, random_state=1)
 
 #---------------------------------------
 #tranforms file with zero

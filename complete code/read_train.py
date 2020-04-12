@@ -22,6 +22,7 @@ floderlist = os.listdir(path)
 acc_all = pd.DataFrame()
 loss_all = pd.DataFrame()
 
+
 for num in range(0, len(floderlist), 1):
     
     newpath = os.path.join(path,floderlist[num])
@@ -51,3 +52,4 @@ for num in range(0, len(floderlist), 1):
     loss = [loss]
     p_loss = pd.DataFrame(acc)
     loss_all = pd.concat([loss_all, p_loss], ignore_index=True) 
+    

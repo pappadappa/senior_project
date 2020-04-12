@@ -31,8 +31,7 @@ acc_all = pd.DataFrame()
 con_all = pd.DataFrame()
     
     
-# for num in range(60, len(floderlist), 1):
-for num in range(0, 60, 1):
+for num in range(0, len(floderlist), 1):
 
     newpath = os.path.join(path,floderlist[num])
     os.chdir(newpath) 
